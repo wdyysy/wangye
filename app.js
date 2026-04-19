@@ -1,47 +1,24 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('loginForm');
-    const loginCard = document.getElementById('loginCard');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const yearSpan = document.getElementById('year');
-    const loginBtn = document.querySelector('.login-btn');
+function verify() {
+    const msg = document.getElementById('msg');
+    const cid = document.getElementById('cid').value;
+    const pwd = document.getElementById('pwd').value;
 
-    // Note: Local auth disabled. Forwarding all requests to central LDAP server.
-    const currentYear = new Date().getFullYear();
-    if (yearSpan) {
-        yearSpan.textContent = currentYear;
+    if (!cid || !pwd) {
+        msg.innerHTML = '<span style="color:#c0392b">Please provide valid credentials.</span>';
+        return;
     }
 
-    // Internal Reference: #SEC-9921-X
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const originalBtnText = loginBtn.textContent;
+    msg.innerHTML = '<span style="color:#7f8c8d">Synchronizing archives...</span>';
 
-            // Internal Reference: #xx
-            loginBtn.textContent = 'Verifying...';
-            loginBtn.style.backgroundColor = '#6b7280'; // gree
-            loginBtn.disabled = true;
+    setTimeout(() => {
+        // m
+        msg.innerHTML = '<span style="color:#c0392b">Identity not recognized in this collection.</span>';
+        
+        // d
+        document.getElementById('pwd').value = "";
+    }, 2000);
+}
 
-            // node2
-            setTimeout(() => {
-                // ok
-                loginCard.classList.add('shake');
-                loginBtn.textContent = originalBtnText;
-                loginBtn.style.backgroundColor = ''; // no
-                loginBtn.disabled = false;
-
-                // internal
-                usernameInput.value = '';
-                passwordInput.value = '';
-                passwordInput.focus();
-
-                // que
-                setTimeout(() => {
-                    loginCard.classList.remove('shake');
-                }, 500);
-
-            }, 500); // #s2
-        });
-    }
-});
+// p
+console.log("Image Compression Engine: Active");
+console.log("Digital Asset Management: Locked");
