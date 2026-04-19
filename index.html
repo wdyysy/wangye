@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Console | System Access</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --accent-color: #00ff41; /* 极客绿 */
+            --border-color: #1a1a1a;
+            --input-bg: #111;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: #eeeeee;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .terminal-box {
+            width: 380px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: #0d0d0d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .title { font-size: 14px; color: #666; margin-left: auto; }
+
+        h2 { font-size: 18px; margin: 20px 0; font-weight: normal; color: var(--accent-color); }
+
+        .field { margin-bottom: 15px; position: relative; }
+        
+        .field label { display: block; font-size: 12px; color: #555; margin-bottom: 5px; }
+
+        input {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            color: var(--accent-color);
+            outline: none;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        input:focus { border-color: var(--accent-color); }
+
+        button {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        button:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+
+        .status-line {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: var(--accent-color);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="terminal-box">
+        <div class="header">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+            <span class="title">ssh@root:~/admin</span>
+        </div>
+        <h2>AUTHENTICATION REQUIRED</h2>
+        <div class="field">
+            <label>IDENTIFIER</label>
+            <input type="text" id="user" autocomplete="off">
+        </div>
+        <div class="field">
+            <label>ACCESS_TOKEN</label>
+            <input type="password" id="pass">
+        </div>
+        <button onclick="runAuth()">Execute</button>
+        <div class="status-line">
+            <span id="log">SYS_READY_V3.1</span>
+            <span>Uptime: 1042h<span class="cursor"></span></span>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
