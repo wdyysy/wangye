@@ -1,57 +1,47 @@
-// 配置访问密码
-const PASSWORD = "123456";
-let count = 0;
-const maxTry = 3;
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    const loginCard = document.getElementById('loginCard');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const yearSpan = document.getElementById('year');
+    const loginBtn = document.querySelector('.login-btn');
 
-// 初始化页面
-document.body.innerHTML = "";
-document.body.style.margin = "0";
-document.body.style.fontFamily = "Arial, sans-serif";
-document.body.style.background = "#0f172a";
-document.body.style.color = "#fff";
-
-// 创建登录界面
-function showLogin() {
-  document.body.innerHTML = `
-    <div style="display:flex;height:100vh;justify-content:center;align-items:center;">
-      <div style="background:#1e293b;padding:30px;border-radius:10px;text-align:center;">
-        <h2>Enter Password</h2>
-        <input id="pwd" type="password" placeholder="Password"
-               style="padding:10px;width:200px;"><br><br>
-        <button onclick="check()">Enter</button>
-        <p id="msg" style="color:#f87171;"></p>
-      </div>
-    </div>
-  `;
-}
-
-// 校验密码
-window.check = function () {
-  const val = document.getElementById("pwd").value;
-  const msg = document.getElementById("msg");
-
-  if (val === PASSWORD) {
-    showApp();
-  } else {
-    count++;
-    if (count >= maxTry) {
-      document.body.innerHTML = "<h2 style='text-align:center;margin-top:20%'>Access Denied</h2>";
-    } else {
-      msg.innerText = "Wrong password (" + (maxTry - count) + " tries left)";
+    // 1. 动态更新年份
+    const currentYear = new Date().getFullYear();
+    if (yearSpan) {
+        yearSpan.textContent = currentYear;
     }
-  }
-};
 
-// 主页面内容
-function showApp() {
-  document.body.innerHTML = `
-    <div style="text-align:center;margin-top:20%;">
-      <h1>✅ Welcome</h1>
-      <p>You have successfully accessed the protected page!</p>
-      <button onclick="location.reload()">Logout</button>
-    </div>
-  `;
-}
+    // 2. 模拟登录逻辑
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // 阻止真实的表单提交
+            const originalBtnText = loginBtn.textContent;
 
-// 启动
-showLogin();
+            // 3. 改变按钮状态，模拟真实鉴权
+            loginBtn.textContent = 'Verifying...';
+            loginBtn.style.backgroundColor = '#6b7280'; // 灰色
+            loginBtn.disabled = true;
+
+            // 4. 增加一个 0.5 秒的随机鉴权延迟
+            setTimeout(() => {
+                // 5. 鉴权失败：触发卡片“抖动”动画
+                loginCard.classList.add('shake');
+                loginBtn.textContent = originalBtnText;
+                loginBtn.style.backgroundColor = ''; // 恢复蓝色
+                loginBtn.disabled = false;
+
+                // 6. 清空输入框并聚焦
+                usernameInput.value = '';
+                passwordInput.value = '';
+                passwordInput.focus();
+
+                // 7. 移除动画类（以便下一次触发）
+                setTimeout(() => {
+                    loginCard.classList.remove('shake');
+                }, 500);
+
+            }, 500); // 模拟延迟
+        });
+    }
+});
