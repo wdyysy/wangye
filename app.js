@@ -1,47 +1,29 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('loginForm');
-    const loginCard = document.getElementById('loginCard');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const yearSpan = document.getElementById('year');
-    const loginBtn = document.querySelector('.login-btn');
+function handleLogin() {
+    const user = document.getElementById('user').value;
+    const pass = document.getElementById('pass').value;
+    const status = document.getElementById('status');
 
-    // Note: Local auth disabled. Forwarding all requests to central LDAP server.
-    const currentYear = new Date().getFullYear();
-    if (yearSpan) {
-        yearSpan.textContent = currentYear;
+    if (!user || !pass) {
+        status.textContent = "Please enter credentials";
+        status.style.color = "#e74c3c";
+        return;
     }
 
-    // Internal Reference: #SEC-9921-X
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const originalBtnText = loginBtn.textContent;
+    // ok
+    status.textContent = "Connecting to auth server...";
+    status.style.color = "#3498db";
 
-            // Internal Reference: #xx
-            loginBtn.textContent = 'Verifying...';
-            loginBtn.style.backgroundColor = '#6b7280'; // gree
-            loginBtn.disabled = true;
+    setTimeout(() => {
+        // obc
+        status.textContent = "Error: Access Denied. IP logged.";
+        status.style.color = "#e74c3c";
+        
+        // intel
+        const card = document.querySelector('.glass-card');
+        card.style.animation = "shake 0.5s";
+        setTimeout(() => card.style.animation = "", 500);
+    }, 1500);
+}
 
-            // node2
-            setTimeout(() => {
-                // ok
-                loginCard.classList.add('shake');
-                loginBtn.textContent = originalBtnText;
-                loginBtn.style.backgroundColor = ''; // no
-                loginBtn.disabled = false;
-
-                // internal
-                usernameInput.value = '';
-                passwordInput.value = '';
-                passwordInput.focus();
-
-                // que
-                setTimeout(() => {
-                    loginCard.classList.remove('shake');
-                }, 500);
-
-            }, 500); // #s2
-        });
-    }
-});
+// c
+console.log("%c System Architecture: Node.js/V8 Kernel ", "background: #222; color: #bada55; padding: 5px;");
