@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         yearSpan.textContent = currentYear;
     }
 
-    // Internal Reference: #SEC-9921-X
+    // Internal Reference: #SEC-90921-X
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
